@@ -3,6 +3,7 @@
 ## A simple god genre game
 
 ---
+
 ### 1. Barebones Mechanics:
 
 * Create a human
@@ -12,7 +13,6 @@
 * Nurture (ie. raised to be Religious, or Nerdy, or offical)
 * Grow the human: baby->toddler->preteen->teen->young adult->adult->elderly
 * family tree
-
 
 ### 2. Basic Game Mechanics:
 
