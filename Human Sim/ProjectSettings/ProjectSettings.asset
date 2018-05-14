@@ -644,7 +644,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 4b7014e8-69dc-4cf8-941c-2446e28338a5
   projectName: Human Sim
   organizationId: daniel-korsah
