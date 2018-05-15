@@ -45,3 +45,9 @@
 * Clone te project or download and extract.
 
 * Go to the builds folder and run the exe.
+
+---
+
+## Copying
+
+This project me not be copied or redistribued. All rights reserved.
