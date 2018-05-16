@@ -8,12 +8,12 @@ public class Person
 	public string FirstName { get; set; }
 	public string LastName { get; set; }
 	public int Age { get; private set; }
-	public Stats stats { get; private set; }
+	public Dictionary<string, int> stats { get; private set; }
 
 	public static int AllTimeCount { get; private set; }
 	private int Id { get; }
 
-	Person(string first, string last)
+	public Person(string first, string last)
 	{
 		FirstName = first;
 		LastName = last;
@@ -22,7 +22,7 @@ public class Person
 		AllTimeCount++;
 	}
 
-	void SetStats(Stats s)
+	public void SetStats(Dictionary<string, int> s)
 	{
 		stats = s;
 	}
