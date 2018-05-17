@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PersonManager : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class PersonManager : MonoBehaviour
 	{
 		TMP_InputField first = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
 		TMP_InputField last = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
-		Person newborn = new Person(first.text, last.text);
+		bool male = GameObject.Find("ToggleMale").GetComponent<Toggle>().isOn;
+		Person newborn = new Person(first.text, last.text, male);
 		if (RollForStats)
 			newborn.SetStats(Stats);
 		else
