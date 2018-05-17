@@ -38,16 +38,13 @@ public class PopDown : MonoBehaviour
     {
         rt.localPosition = downPos;
         isDown = true;
-        Debug.Log("Down");
         Time.timeScale = 0;
     }
 
     public void SetUp()
     {
         rt.localPosition = upPos;
-        Debug.Log(rt.localPosition = upPos);
         isDown = false;
-        Debug.Log("Up");
         Time.timeScale = 1;
     }
 }
