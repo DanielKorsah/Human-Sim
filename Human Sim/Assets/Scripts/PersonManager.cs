@@ -16,6 +16,9 @@ public class PersonManager : MonoBehaviour
 	[SerializeField]
 	Dictionary<string, int> h;
 
+	[SerializeField]
+	private List<int> vals;
+
 	public void Spawn()
 	{
 		TMP_InputField first = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
@@ -45,6 +48,8 @@ public class PersonManager : MonoBehaviour
 
 		Stats = d;
 		SetGUINums();
+
+		vals = d.Values.ToList();
 	}
 
 	public Dictionary<string, int> PointBuy()
