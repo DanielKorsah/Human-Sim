@@ -14,7 +14,7 @@ public class MessageController : MonoBehaviour
 	public void PostMessage(string text)
 	{
 		lineCount++;
-		if (lineCount > 12)
+		if (lineCount > 18)
 			gameObject.GetComponent<TextOffsetBump>().Bump();
 		textBox.text += "\n" + text;
 	}
