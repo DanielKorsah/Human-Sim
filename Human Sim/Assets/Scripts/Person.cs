@@ -14,7 +14,9 @@ public class Person
 	public static int AllTimeCount { get; private set; }
 	private int Id { get; }
 
-	public Person(string first, string last, bool sex)
+	GameObject MC;
+
+	public Person(string first, string last, bool sex, GameObject cont)
 	{
 		FirstName = first;
 		LastName = last;
@@ -22,6 +24,13 @@ public class Person
 		Sex = sex;
 		Id = AllTimeCount;
 		AllTimeCount++;
+
+		MC = cont;
+
+		string colourMod = sex ? "#4286f4" : "#ff56ff";
+
+		Notification(string.Format("<{0}>{1} {2}</color> was born. ", colourMod, first, last));
+
 	}
 
 	public void SetStats(Dictionary<string, int> s)
@@ -32,5 +41,11 @@ public class Person
 	public void IncrementAge()
 	{
 		Age++;
+	}
+
+	public void Notification(string message)
+	{
+		MessageController controller = MC.GetComponent<MessageController>();
+		controller.PostMessage(message);
 	}
 }

@@ -19,12 +19,15 @@ public class PersonManager : MonoBehaviour
 	[SerializeField]
 	private List<int> vals;
 
+	[SerializeField]
+	private GameObject messageController;
+
 	public void Spawn()
 	{
 		TMP_InputField first = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
-		TMP_InputField last = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
+		TMP_InputField last = GameObject.Find("Name2").GetComponentInChildren<TMP_InputField>();
 		bool male = GameObject.Find("ToggleMale").GetComponent<Toggle>().isOn;
-		Person newborn = new Person(first.text, last.text, male);
+		Person newborn = new Person(first.text, last.text, male, messageController);
 		if (RollForStats)
 			newborn.SetStats(Stats);
 		else
