@@ -22,10 +22,57 @@ public class PersonManager : MonoBehaviour
 	[SerializeField]
 	private GameObject messageController;
 
+	[SerializeField]
+	private GameObject spawnButtonObject;
+
+	private Button button;
+	private TMP_InputField first;
+	private TMP_InputField last;
+
+	void Start()
+	{
+		button = spawnButtonObject.GetComponent<Button>();
+		first = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
+		last = GameObject.Find("Name2").GetComponentInChildren<TMP_InputField>();
+	}
+
+	void Update()
+	{
+		button.interactable = Validate();
+	}
+
+	private bool Validate()
+	{
+		if (ValidNames() && HasStats())
+			return true;
+		else
+			return false;
+	}
+
+	private bool ValidNames()
+	{
+		if (first.text != "" && last.text != "")
+			return true;
+		else
+			return false;
+	}
+
+	private bool HasStats()
+	{
+		foreach (var stat in Stats)
+		{
+			if (stat.Value == 0)
+			{
+				Debug.Log("invalid player stats");
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public void Spawn()
 	{
-		TMP_InputField first = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
-		TMP_InputField last = GameObject.Find("Name2").GetComponentInChildren<TMP_InputField>();
+
 		bool male = GameObject.Find("ToggleMale").GetComponent<Toggle>().isOn;
 		Person newborn = new Person(first.text, last.text, male, messageController);
 		if (RollForStats)
