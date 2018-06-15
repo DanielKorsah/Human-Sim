@@ -66,7 +66,7 @@ public class PersonManager : MonoBehaviour
 		PeopleDataObject allPeople = PeopleDataObject.Instance;
 		allPeople.People = People;
 		allPeople.Count = Person.AllTimeCount;
-		var jsonString = JsonConvert.SerializeObject(allPeople);
+		var jsonString = JsonConvert.SerializeObject(allPeople, Formatting.Indented);
 		string path = Path.Combine(Application.streamingAssetsPath, "PeopleData.json");
 		if (!File.Exists(path))
 			File.Create(path);
