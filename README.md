@@ -38,7 +38,9 @@
 
   * Open with Unity version 2018.1.0f or later.
 
-  * Install TextMeshPro pluggin.
+  * Install `TextMeshPro` pluggin.
+
+  * Install `JSON .Net` for Unity
 
 ## How to run latest standalone build
 
