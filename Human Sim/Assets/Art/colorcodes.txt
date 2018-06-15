@@ -1,0 +1,5 @@
+
+Background Blue: #b0cee8
+Buttons Purple: #9975b3
+Window Bar Base Beige: #f9e3ee
+Window Bar Pink: #c3a2d1
