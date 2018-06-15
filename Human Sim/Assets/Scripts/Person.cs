@@ -11,7 +11,7 @@ public class Person
 	public bool Sex { get; private set; } //true = male, false = female
 	public Dictionary<string, int> stats { get; private set; }
 
-	public static int AllTimeCount { get; private set; }
+	public static int AllTimeCount { get; set; }
 	private int Id { get; }
 
 	GameObject MC;

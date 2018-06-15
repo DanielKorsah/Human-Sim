@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,16 +31,65 @@ public class PersonManager : MonoBehaviour
 	private TMP_InputField first;
 	private TMP_InputField last;
 
+	private float timer = 0;
+
 	void Start()
 	{
 		button = spawnButtonObject.GetComponent<Button>();
 		first = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
 		last = GameObject.Find("Name2").GetComponentInChildren<TMP_InputField>();
+
+		if (!Directory.Exists(Application.streamingAssetsPath))
+			Directory.CreateDirectory(Application.streamingAssetsPath);
+		//try to load people from file, if fails people list is unchanged from default empty
+		LoadRoster();
+
 	}
 
 	void Update()
 	{
 		button.interactable = Validate();
+
+		timer -= Time.deltaTime;
+
+		if (timer <= 0)
+		{
+			SaveRoster();
+			timer = 10;
+		}
+
+	}
+
+	private void SaveRoster()
+	{
+
+		PeopleDataObject allPeople = PeopleDataObject.Instance;
+		allPeople.People = People;
+		allPeople.Count = Person.AllTimeCount;
+		var jsonString = JsonConvert.SerializeObject(allPeople);
+		string path = Path.Combine(Application.streamingAssetsPath, "PeopleData.json");
+		if (!File.Exists(path))
+			File.Create(path);
+		File.WriteAllText(path, jsonString);
+		Debug.Log("Saved");
+	}
+
+	private void LoadRoster()
+	{
+		string path = Path.Combine(Application.streamingAssetsPath, "PeopleData.json");
+		if (!File.Exists(path))
+		{
+			Debug.Log("NO SAVE FILE RECOGNISED");
+		}
+		else
+		{
+			PeopleDataObject allPeople = PeopleDataObject.Instance;
+			string jsonString = File.ReadAllText(path);
+			allPeople = JsonConvert.DeserializeObject<PeopleDataObject>(jsonString);
+			People = allPeople.People;
+			Person.AllTimeCount = allPeople.Count;
+			Debug.Log("Loaded");
+		}
 	}
 
 	private bool Validate()
@@ -70,6 +121,7 @@ public class PersonManager : MonoBehaviour
 		return true;
 	}
 
+	//instantiate new person 
 	public void Spawn()
 	{
 
@@ -84,6 +136,7 @@ public class PersonManager : MonoBehaviour
 
 	}
 
+	//aassign rolled numbers to person's attributes
 	public void RollStats()
 	{
 		Dictionary<string, int> d = new Dictionary<string, int>();
@@ -102,6 +155,7 @@ public class PersonManager : MonoBehaviour
 		vals = d.Values.ToList();
 	}
 
+	//TODO - implement a point buy option
 	public Dictionary<string, int> PointBuy()
 	{
 		Dictionary<string, int> d = new Dictionary<string, int>();
@@ -109,6 +163,7 @@ public class PersonManager : MonoBehaviour
 		return d;
 	}
 
+	//return list of top 3 results of 4 rolls
 	List<int> BestThreeOfFour()
 	{
 		List<int> rolls = new List<int>();
@@ -129,6 +184,7 @@ public class PersonManager : MonoBehaviour
 		return best;
 	}
 
+	//set the numbers on the interface to match those of the current person
 	void SetGUINums()
 	{
 		GameObject numberContainer = GameObject.Find("Numbers");
