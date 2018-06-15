@@ -35,5 +35,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+Human\ Sim/Assets/TextMesh\ Pro/
 Human\ Sim/Assets/JsonDotNet
 Human\ Sim/Assets/JsonDotNet.meta
