@@ -31,7 +31,7 @@ public class PersonManager : MonoBehaviour
 	private TMP_InputField first;
 	private TMP_InputField last;
 
-	private float timer = 0;
+	private float timer = 10;
 
 	void Start()
 	{
@@ -110,9 +110,14 @@ public class PersonManager : MonoBehaviour
 
 	private bool HasStats()
 	{
+		if (Stats.Count != 6)
+		{
+			return false;
+		}
+
 		foreach (var stat in Stats)
 		{
-			if (stat.Value == 0)
+			if (stat.Value == 0 || stat.Value == null)
 			{
 				Debug.Log("invalid player stats");
 				return false;

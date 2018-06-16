@@ -5,6 +5,7 @@ using UnityEngine;
 public class Person
 {
 
+	public int Id { get; private set; }
 	public string FirstName { get; set; }
 	public string LastName { get; set; }
 	public int Age { get; private set; }
@@ -12,11 +13,10 @@ public class Person
 	public Dictionary<string, int> stats { get; private set; }
 
 	public static int AllTimeCount { get; set; }
-	private int Id { get; }
 
 	GameObject MC;
 
-	public Person(string first, string last, bool sex, GameObject cont)
+	public Person(string first, string last, bool sex, GameObject controller)
 	{
 		FirstName = first;
 		LastName = last;
@@ -25,8 +25,9 @@ public class Person
 		Id = AllTimeCount;
 		AllTimeCount++;
 
-		MC = cont;
+		MC = controller;
 
+		//if sex is true (male) colour modifier is blue, else colour modifier is pink
 		string colourMod = sex ? "#4286f4" : "#ff56ff";
 
 		Notification(string.Format("<{0}>{1} {2}</color> was born. ", colourMod, first, last));
