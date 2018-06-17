@@ -3225,6 +3225,7 @@ MonoBehaviour:
   vals: 
   messageController: {fileID: 1080791260}
   spawnButtonObject: {fileID: 2012293547}
+  saveDelay: 5
 --- !u!1 &1864128560
 GameObject:
   m_ObjectHideFlags: 0

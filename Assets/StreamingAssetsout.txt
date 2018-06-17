@@ -1,0 +1,21 @@
+{
+  "People": [
+    {
+      "Id": 0,
+      "FirstName": "Tim",
+      "LastName": "Tom",
+      "Age": 0,
+      "Sex": false,
+      "Stats": null
+    },
+    {
+      "Id": 0,
+      "FirstName": "Jane",
+      "LastName": "Jam",
+      "Age": 0,
+      "Sex": false,
+      "Stats": null
+    }
+  ],
+  "Count": 2
+}

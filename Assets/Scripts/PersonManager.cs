@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,10 +32,14 @@ public class PersonManager : MonoBehaviour
 	private TMP_InputField first;
 	private TMP_InputField last;
 
-	private float timer = 10;
+	[SerializeField]
+	private float saveDelay = 5;
+	private float timer;
 
 	void Start()
 	{
+		timer = saveDelay;
+
 		button = spawnButtonObject.GetComponent<Button>();
 		first = GameObject.Find("Name1").GetComponentInChildren<TMP_InputField>();
 		last = GameObject.Find("Name2").GetComponentInChildren<TMP_InputField>();
@@ -42,7 +47,9 @@ public class PersonManager : MonoBehaviour
 		if (!Directory.Exists(Application.streamingAssetsPath))
 			Directory.CreateDirectory(Application.streamingAssetsPath);
 		//try to load people from file, if fails people list is unchanged from default empty
+		Debug.Log("Preload");
 		LoadRoster();
+		Debug.Log("PostLoad");
 
 	}
 
@@ -51,11 +58,10 @@ public class PersonManager : MonoBehaviour
 		button.interactable = Validate();
 
 		timer -= Time.deltaTime;
-
 		if (timer <= 0)
 		{
 			SaveRoster();
-			timer = 10;
+			timer = saveDelay;
 		}
 
 	}
@@ -66,10 +72,19 @@ public class PersonManager : MonoBehaviour
 		PeopleDataObject allPeople = PeopleDataObject.Instance;
 		allPeople.People = People;
 		allPeople.Count = Person.AllTimeCount;
-		var jsonString = JsonConvert.SerializeObject(allPeople, Formatting.Indented);
+
+		//serialise list of people, indented, with type info
+		var jsonString = JsonConvert.SerializeObject(allPeople, Formatting.Indented, new JsonSerializerSettings
+		{
+			TypeNameHandling = TypeNameHandling.Auto
+		});
+
 		string path = Path.Combine(Application.streamingAssetsPath, "PeopleData.json");
 		if (!File.Exists(path))
-			File.Create(path);
+		{
+			File.Create(path).Dispose();
+		}
+
 		File.WriteAllText(path, jsonString);
 		Debug.Log("Saved");
 	}
@@ -77,6 +92,7 @@ public class PersonManager : MonoBehaviour
 	private void LoadRoster()
 	{
 		string path = Path.Combine(Application.streamingAssetsPath, "PeopleData.json");
+		string debug = Path.Combine(Application.streamingAssetsPath, "debug.json");
 		if (!File.Exists(path))
 		{
 			Debug.Log("NO SAVE FILE RECOGNISED");
@@ -85,7 +101,14 @@ public class PersonManager : MonoBehaviour
 		{
 			PeopleDataObject allPeople = PeopleDataObject.Instance;
 			string jsonString = File.ReadAllText(path);
-			allPeople = JsonConvert.DeserializeObject<PeopleDataObject>(jsonString);
+
+			//check that the file is read correctly
+			File.WriteAllText(debug, jsonString);
+
+			allPeople = JsonConvert.DeserializeObject<PeopleDataObject>(jsonString, new JsonSerializerSettings
+			{
+				TypeNameHandling = TypeNameHandling.Auto
+			});
 			People = allPeople.People;
 			Person.AllTimeCount = allPeople.Count;
 			Debug.Log("Loaded");
@@ -112,16 +135,8 @@ public class PersonManager : MonoBehaviour
 	{
 		if (Stats.Count != 6)
 		{
+			Debug.Log("invalid player stats");
 			return false;
-		}
-
-		foreach (var stat in Stats)
-		{
-			if (stat.Value == 0 || stat.Value == null)
-			{
-				Debug.Log("invalid player stats");
-				return false;
-			}
 		}
 		return true;
 	}
