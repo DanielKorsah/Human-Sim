@@ -156,7 +156,7 @@ public class PersonManager : MonoBehaviour
 
 	}
 
-	//aassign rolled numbers to person's attributes
+	//assign rolled numbers to person's attributes
 	public void RollStats()
 	{
 		Dictionary<string, int> d = new Dictionary<string, int>();
@@ -186,6 +186,7 @@ public class PersonManager : MonoBehaviour
 	//return list of top 3 results of 4 rolls
 	List<int> BestThreeOfFour()
 	{
+		//roll 4 times
 		List<int> rolls = new List<int>();
 		for (int i = 0; i < 4; i++)
 		{
@@ -194,6 +195,7 @@ public class PersonManager : MonoBehaviour
 
 		List<int> best = new List<int>();
 
+		//take top 3
 		for (int i = 0; i < 3; i++)
 		{
 
