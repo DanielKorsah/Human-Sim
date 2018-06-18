@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class PersonManager : MonoBehaviour
 {
 
-	public bool RollForStats;
+	public bool RollForStats = true;
 	public List<Person> People = new List<Person>();
 
 	private Dictionary<string, int> Stats = new Dictionary<string, int>();
@@ -28,6 +28,9 @@ public class PersonManager : MonoBehaviour
 	[SerializeField]
 	private GameObject spawnButtonObject;
 
+	[SerializeField]
+	private bool rolled;
+
 	private Button button;
 	private TMP_InputField first;
 	private TMP_InputField last;
@@ -38,6 +41,10 @@ public class PersonManager : MonoBehaviour
 
 	void Start()
 	{
+		if (messageController == null)
+			Person.messageController = GameObject.Find("PersonManager");
+		else
+			Person.messageController = this.messageController;
 		timer = saveDelay;
 
 		button = spawnButtonObject.GetComponent<Button>();
@@ -122,10 +129,14 @@ public class PersonManager : MonoBehaviour
 
 	private bool Validate()
 	{
-		if (ValidNames() && HasStats())
-			return true;
-		else
-			return false;
+		if (RollForStats)
+		{
+			if (ValidNames() && rolled)
+				return true;
+			else
+				return false;
+		}
+
 	}
 
 	private bool ValidNames()
@@ -140,7 +151,6 @@ public class PersonManager : MonoBehaviour
 	{
 		if (Stats.Count != 6)
 		{
-			Debug.Log("invalid player stats");
 			return false;
 		}
 		return true;
@@ -151,13 +161,19 @@ public class PersonManager : MonoBehaviour
 	{
 
 		bool male = GameObject.Find("ToggleMale").GetComponent<Toggle>().isOn;
-		Person newborn = new Person(first.text, last.text, male, messageController);
-		if (RollForStats)
-			newborn.SetStats(Stats);
+		Person newborn;
+		if (Validate())
+		{
+			newborn = new Person(first.text, last.text, 0, male, Stats);
+			People.Add(newborn);
+			newborn.Notification("was born.");
+			rolled = false;
+		}
 		else
-			newborn.SetStats(Stats);
-
-		People.Add(newborn);
+		{
+			Debug.Log("What the shit how are you trying to span an invalid person," +
+				"the button should be greyed");
+		}
 
 	}
 
@@ -176,6 +192,7 @@ public class PersonManager : MonoBehaviour
 
 		Stats = d;
 		SetGUINums();
+		rolled == true;
 
 		vals = d.Values.ToList();
 	}
