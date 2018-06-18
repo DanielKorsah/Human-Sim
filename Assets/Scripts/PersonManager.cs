@@ -111,6 +111,11 @@ public class PersonManager : MonoBehaviour
 			});
 			People = allPeople.People;
 			Person.AllTimeCount = allPeople.Count;
+
+			foreach (Person person in People)
+			{
+				person.Notification("loaded from save.");
+			}
 			Debug.Log("Loaded");
 		}
 	}

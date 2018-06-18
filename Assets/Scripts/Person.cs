@@ -44,14 +44,18 @@ public class Person
 		Age++;
 	}
 
-	public void IncrementAge()
+	private string colourMod()
 	{
-		Age++;
+		//if sex is true (male) colour modifier is blue, else colour modifier is pink
+		return Sex ? "#4286f4" : "#ff56ff";
 	}
 
-	public void Notification(string message)
+	public void Notification(string input)
 	{
 		MessageController controller = messageController.GetComponent<MessageController>();
+
+		string message = string.Format("<{0}>{1} {2}</color> ", colourMod(), FirstName, LastName);
+		message += input;
 		controller.PostMessage(message);
 	}
 }
