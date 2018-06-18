@@ -14,51 +14,34 @@ public class Person
 
 	public static int AllTimeCount { get; set; }
 
-	private GameObject messageController;
+	public static GameObject messageController;
 
-	public Person(string first, string last, bool sex, GameObject controller)
+	public Person(string first, string last, int age, bool sex, Dictionary<string, int> stats)
 	{
-		Debug.Log(" overload 1");
-		FirstName = first;
-		LastName = last;
-		Age = 0;
-		Sex = sex;
+		Debug.Log("overload 1");
 		Id = AllTimeCount;
 		AllTimeCount++;
 
-		if (controller != null)
-			messageController = controller;
-		else
-			messageController = GameObject.Find("PersonManager");
-
-		//if sex is true (male) colour modifier is blue, else colour modifier is pink
-		string colourMod = sex ? "#4286f4" : "#ff56ff";
-
-		Notification(string.Format("<{0}>{1} {2}</color> was born. ", colourMod, first, last));
-
-	}
-
-	public Person(int id, string first, string last, bool sex, Dictionary<string, int> stats)
-	{
-		Debug.Log("overload 2");
-		Id = id;
 		FirstName = first;
 		LastName = last;
+		Age = age;
 		Sex = sex;
 		Stats = stats;
 
-		messageController = GameObject.Find("PersonManager");
+		if (messageController == null)
+			messageController = GameObject.Find("PersonManager");
 	}
 
 	public Person()
 	{
-		Debug.Log("overload 3");
-		messageController = GameObject.Find("PersonManager");
+		Debug.Log("overload 2");
+		if (messageController == null)
+			messageController = GameObject.Find("PersonManager");
 	}
 
-	public void SetStats(Dictionary<string, int> s)
+	public void IncrementAge()
 	{
-		Stats = s;
+		Age++;
 	}
 
 	public void IncrementAge()
