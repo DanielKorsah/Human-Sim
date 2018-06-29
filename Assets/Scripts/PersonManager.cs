@@ -129,7 +129,7 @@ public class PersonManager : MonoBehaviour
 
 	private bool Validate()
 	{
-		if (RollForStats)
+		if ( /*RollForStats*/ true)
 		{
 			if (ValidNames() && rolled)
 				return true;
@@ -192,7 +192,7 @@ public class PersonManager : MonoBehaviour
 
 		Stats = d;
 		SetGUINums();
-		rolled == true;
+		rolled = true;
 
 		vals = d.Values.ToList();
 	}
