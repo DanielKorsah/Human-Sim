@@ -11,6 +11,7 @@ public class MessageController : MonoBehaviour
 
 	private int lineCount = 0;
 
+	//
 	public void PostMessage(string text)
 	{
 		lineCount++;
